@@ -66,7 +66,9 @@ RCT_EXPORT_MODULE()
   } else if ([requestURL.scheme caseInsensitiveCompare:@"assets-library"] == NSOrderedSame) {
     // This is the older, deprecated way of fetching assets from assets-library
     // using the "assets-library://" protocol
+    #if !TARGET_OS_MACCATALYST
     fetchResult = [PHAsset fetchAssetsWithALAssetURLs:@[requestURL] options:nil];
+#endif
   } else {
     NSString *const msg = [NSString stringWithFormat:@"Cannot send request with unknown protocol: %@", requestURL];
     [delegate URLRequest:cancellationBlock didCompleteWithError:RCTErrorWithMessage(msg)];
